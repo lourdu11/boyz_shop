@@ -1,0 +1,120 @@
+<?php
+include 'config.php';
+include 'header.php';
+?>
+
+<!-- Hero Section -->
+<section class="hero-section bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Trendy Fashion for Boys</h1>
+                <p class="lead mb-4">Discover the latest collection of stylish clothing and accessories for the modern young gentleman.</p>
+                <a href="products.php" class="btn btn-light btn-lg">Shop Now</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="images/shirt1.jpeg" alt="Boys Fashion" class="img-fluid rounded shadow" style="height: 400px; width: 100%; object-fit: cover;" onerror="this.src='https://via.placeholder.com/600x400/007bff/ffffff?text=Boys+Fashion'">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="featured-products py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Products</h2>
+        <div class="row">
+            <?php
+            // Fetch featured products
+            $sql = "SELECT * FROM products LIMIT 4";
+            $result = $conn->query($sql);
+            
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo '
+                    <div class="col-md-3 mb-4">
+                        <div class="card product-card h-100">
+                            <img src="images/' . $row['image'] . '" 
+                                 class="card-img-top" 
+                                 alt="' . $row['name'] . '"
+                                 style="height: 250px; object-fit: cover;"
+                                 onerror="this.src=\'https://via.placeholder.com/300x400/007bff/ffffff?text=Product+Image\'">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">' . $row['name'] . '</h5>
+                                <p class="card-text flex-grow-1">' . substr($row['description'], 0, 80) . '...</p>
+                                <div class="mt-auto">
+                                    <p class="card-text fw-bold text-primary">$' . $row['price'] . '</p>
+                                    <div class="d-grid gap-2">
+                                        <a href="product-details.php?id=' . $row['id'] . '" class="btn btn-primary">View Details</a>
+                                        <form method="POST" action="add-to-cart.php">
+                                            <input type="hidden" name="product_id" value="' . $row['id'] . '">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="btn btn-outline-primary w-100">Add to Cart</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+                }
+            } else {
+                echo '<p class="text-center">No products found.</p>';
+            }
+            ?>
+        </div>
+        <div class="text-center mt-4">
+            <a href="products.php" class="btn btn-outline-primary">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Shop by Category</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card category-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-tshirt fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Tops</h5>
+                        <p class="card-text">T-shirts, shirts, and more</p>
+                        <a href="products.php?category=Tops" class="btn btn-outline-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card category-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-vest fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Outerwear</h5>
+                        <p class="card-text">Jackets and hoodies</p>
+                        <a href="products.php?category=Outerwear" class="btn btn-outline-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card category-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-user fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Bottoms</h5>
+                        <p class="card-text">Pants and jeans</p>
+                        <a href="products.php?category=Bottoms" class="btn btn-outline-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card category-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-shoe-prints fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Footwear</h5>
+                        <p class="card-text">Shoes and sneakers</p>
+                        <a href="products.php?category=Footwear" class="btn btn-outline-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php include 'footer.php'; ?>

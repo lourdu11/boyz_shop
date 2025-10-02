@@ -1,0 +1,21 @@
+/* Footer Styles */
+footer {
+    margin-top: auto;
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #0d6efd !important;
+}
+
+.social-links a {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+    transform: translateY(-3px);
+}
